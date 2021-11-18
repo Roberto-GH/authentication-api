@@ -1,0 +1,25 @@
+server:
+  error:
+    include-stacktrace: on_param
+
+spring:
+  datasource:
+    #url: jdbc:mysql://localhost:3306/authentication_app?useSSL=false&serverTimezone=UTC&useLegacyDateTimeCode=false
+    url: jdbc:mysql://localhost:3306/authentication_app?useSSL=true&serverTimezone=UTC&useLegacyDateTimeCode=false
+    username: root
+    password: Natber861019
+  jpa:
+    # sentencias SQL en la consola
+    show-sql: true
+    hibernate:
+      # actualizar base de datos y crear entidades
+      ddl-auto: update
+    properties:
+      hibernate:
+        # hibernate genera SQL optimizado
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+#security
+jwt:
+  secret: s3cr3t
+  expiration: 36000
