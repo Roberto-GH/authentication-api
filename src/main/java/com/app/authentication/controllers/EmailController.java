@@ -41,10 +41,10 @@ public class EmailController {
 
 
   @PostMapping("/send-email")
-  public ResponseEntity<?> sendEmail(@RequestBody EmailValuesDto emailValuesDto){
+  public ResponseEntity<?> sendEmail(@RequestBody EmailValuesDto emailValuesDto) {
     Map<String, String> jsonResponse = new HashMap<>();
     boolean userExist = userService.existsByEmail(emailValuesDto.getMailTo());
-    if(!userExist){
+    if (!userExist) {
       jsonResponse.put("error", "No existe ningún usuario con esas credenciales");
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonResponse);
     }
@@ -68,16 +68,16 @@ public class EmailController {
   @PostMapping("/change-password")
   public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto, BindingResult bindingResult) {
     Map<String, String> jsonResponse = new HashMap<>();
-    if(bindingResult.hasErrors()) {
+    if (bindingResult.hasErrors()) {
       jsonResponse.put("error", "Campos mal puestos");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonResponse);
     }
-    if(!changePasswordDto.getPassword().equals(changePasswordDto.getConfirmPassword())) {
+    if (!changePasswordDto.getPassword().equals(changePasswordDto.getConfirmPassword())) {
       jsonResponse.put("error", "Las contraseñas no coinciden");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonResponse);
     }
     Optional<UserModel> userOptional = userService.getUserByTokenPassword(changePasswordDto.getTokenPassword());
-    if(!userOptional.isPresent()) {
+    if (!userOptional.isPresent()) {
       jsonResponse.put("error", "No existe ningún usuario con esas credenciales");
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonResponse);
     }

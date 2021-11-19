@@ -19,9 +19,9 @@ import java.util.Map;
 @CrossOrigin(origins = "*")// TODO: 17/10/2021  Referenciar front
 public class UserController {
 
-  public static  final String API = "/api";
-  public static  final String USERS = "/users";
-  public static  final String ID_ID = "/{id}";
+  public static final String API = "/api";
+  public static final String USERS = "/users";
+  public static final String ID_ID = "/{id}";
 
   @Autowired
   UserService userService;
@@ -29,16 +29,17 @@ public class UserController {
   //@ApiIgnore Not endpoint into swagger
   @ApiOperation("List all users")
   @GetMapping(USERS)
-  public ResponseEntity<?> findAllUsers(){
+  public ResponseEntity<?> findAllUsers() {
     List<AllUsersResponseDto> users = userService.findAllUsers();
     return ResponseEntity.status(HttpStatus.OK).body(users);
   }
 
+
   @ApiOperation("Get user by id")
   @PreAuthorize("hasRole('ADMIN')")
-  @GetMapping(USERS+ID_ID)
-  public  ResponseEntity<?> getById(@PathVariable int id){
-    if (!userService.existsById(id)){
+  @GetMapping(USERS + ID_ID)
+  public ResponseEntity<?> getById(@PathVariable int id) {
+    if (!userService.existsById(id)) {
       Map<String, String> jsonResponse = new HashMap<>();
       jsonResponse.put("error", "El usuario no existe");
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonResponse);

@@ -44,7 +44,8 @@ public class UserServiceImpl implements UserService {
   public List<AllUsersResponseDto> findAllUsers() {
     List<UserModel> users = userRepository.findAll();
     List<AllUsersResponseDto> usersDto = modelMapper.map(users,
-            new TypeToken<List<AllUsersResponseDto>>() {}.getType());
+            new TypeToken<List<AllUsersResponseDto>>() {
+            }.getType());
     return usersDto;
   }
 
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService {
 
     Set<RolModel> roles = new HashSet<>();
     roles.add(rolService.getRoleByName(RolName.ROLE_USER));
-    if (userSignUpRequestDto.getRoles().contains("ADMIN")){
+    if (userSignUpRequestDto.getRoles().contains("ADMIN")) {
       roles.add(rolService.getRoleByName(RolName.ROLE_ADMIN));
     }
 

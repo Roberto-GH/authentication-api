@@ -11,13 +11,13 @@ public class AuthenticationAppFactory {
 
 
   @Bean
-  public ModelMapper modelMapper(){
+  public ModelMapper modelMapper() {
     return new ModelMapper();
   }
 
 
   @Bean
-  public ClassLoaderTemplateResolver templateResolver(){
+  public ClassLoaderTemplateResolver templateResolver() {
     ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
     resolver.setPrefix("templates/");
     resolver.setSuffix(".html");

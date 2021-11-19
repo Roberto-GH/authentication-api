@@ -3,28 +3,25 @@ server:
     include-stacktrace: on_param
 
 spring:
+  #BD access
   datasource:
-    #url: jdbc:mysql://localhost:3306/authentication_app?useSSL=false&serverTimezone=UTC&useLegacyDateTimeCode=false
-    url: jdbc:mysql://localhost:3306/authentication_app?useSSL=true&serverTimezone=UTC&useLegacyDateTimeCode=false
-    username: root
-    password: Natber861019
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  #update BD, log SQL
   jpa:
-    # sentencias SQL en la consola
     show-sql: true
     hibernate:
-      # actualizar base de datos y crear entidades
       ddl-auto: update
     properties:
       hibernate:
-        # hibernate genera SQL optimizado
         dialect: org.hibernate.dialect.MySQL5Dialect
-
-#mail configuration
+  #mail configuration
   mail:
-    host: smtp.gmail.com
+    host: ${GMAIL_HOST}
     port: 587
-    username: roberthdrums@gmail.com
-    password: klvgmsxbxegcdgtz
+    username: ${GMAIL_USERNAME}
+    password: ${GMAIL_PASSWORD_KEY}
     properties:
       mail:
         smtp:
@@ -32,11 +29,12 @@ spring:
           starttls:
             enable: true
           ssl:
-            trust: smtp.gmail.com
+            trust: ${GMAIL_TRUST}
 
-mail.url.front: http://google.com/
+#mail front-end
+mail.url.front: ${FRONT_END_URL}
 
 #security
 jwt:
-  secret: s3cr3t
+  secret: ${JWT_SECRET}
   expiration: 36000

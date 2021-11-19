@@ -29,9 +29,10 @@ import java.util.Map;
 @CrossOrigin(origins = "*")// TODO: 17/10/2021  Referenciar front
 public class AuthController {
 
-  public static  final String SIGNUP = "/signup";
-  public static  final String AUTH = "/auth";
-  public static  final String LOGIN = "/login";
+
+  public static final String SIGNUP = "/signup";
+  public static final String AUTH = "/auth";
+  public static final String LOGIN = "/login";
 
   @Autowired
   UserService userService;
@@ -48,21 +49,20 @@ public class AuthController {
   @Autowired
   JwtProvider jwtProvider;
 
+
   @ApiOperation("Create new user")
   @PostMapping(SIGNUP)
-  public ResponseEntity<?> signUp(@Valid @RequestBody UserSignUpRequestDto userSignUpRequestDto, BindingResult bindingResult){
-    if (bindingResult.hasErrors()){
-      Map<String, String> jsonResponseError= new HashMap<>();
+  public ResponseEntity<?> signUp(@Valid @RequestBody UserSignUpRequestDto userSignUpRequestDto, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      Map<String, String> jsonResponseError = new HashMap<>();
       jsonResponseError.put("error", "Campos mal puestos o email invalido");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonResponseError);
     }
-
-    if(userService.existsByEmail(userSignUpRequestDto.getEmail())){
+    if (userService.existsByEmail(userSignUpRequestDto.getEmail())) {
       Map<String, String> jsonResponse = new HashMap<>();
-      jsonResponse.put("error", "Ya existe un usuario con el email "+userSignUpRequestDto.getEmail());
+      jsonResponse.put("error", "Ya existe un usuario con el email " + userSignUpRequestDto.getEmail());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonResponse);
     }
-
     UserResponseDto userCreated = userService.createUser(userSignUpRequestDto);
     return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
   }
@@ -70,14 +70,12 @@ public class AuthController {
 
   @ApiOperation("Login, email and password")
   @PostMapping(LOGIN)
-  public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto,
-                                 BindingResult bindingResult){
-    if (bindingResult.hasErrors()){
-      Map<String, String> jsonResponseError= new HashMap<>();
+  public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+      Map<String, String> jsonResponseError = new HashMap<>();
       jsonResponseError.put("error", "Campos mal puestos o email invalido");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonResponseError);
     }
-
     Authentication authentication =
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
