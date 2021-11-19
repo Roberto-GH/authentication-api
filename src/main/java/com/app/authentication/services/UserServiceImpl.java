@@ -60,6 +60,20 @@ public class UserServiceImpl implements UserService {
     return modelMapper.map(user.get(), UserResponseDto.class);
   }
 
+  public Optional<UserModel> getByEmail(String email) {
+    return userRepository.getByEmail(email);
+  }
+
+  @Override
+  public Optional<UserModel> getUserByTokenPassword(String tokenPassword) {
+    return userRepository.getByTokenPassword(tokenPassword);
+  }
+
+  @Override
+  public void updateUserPassword(UserModel userModel) {
+    userRepository.save(userModel);
+  }
+
   @Override
   public UserResponseDto createUser(UserSignUpRequestDto userSignUpRequestDto) {
     UserModel userModelToCreate = modelMapper.map(userSignUpRequestDto, UserModel.class);
@@ -91,6 +105,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean existsByEmail(String email) {
     return userRepository.existsByEmail(email);
+  }
+
+  @Override
+  public boolean existsByTokenPassword(String tokenPassword) {
+    return userRepository.existsByTokenPassword(tokenPassword);
   }
 
 }

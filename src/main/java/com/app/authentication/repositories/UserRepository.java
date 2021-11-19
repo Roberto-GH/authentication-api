@@ -11,7 +11,9 @@ public interface UserRepository extends JpaRepository<UserModel, Integer> {
 
   Optional<UserModel> getByName(String name);
   Optional<UserModel> getByEmail(String email);
+  Optional<UserModel> getByTokenPassword(String tokenPassword);
   boolean existsByName(String name);
   boolean existsByEmail(String email);
+  boolean existsByTokenPassword(String tokenPassword);
 
 }

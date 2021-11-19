@@ -19,6 +19,23 @@ spring:
         # hibernate genera SQL optimizado
         dialect: org.hibernate.dialect.MySQL5Dialect
 
+#mail configuration
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: roberthdrums@gmail.com
+    password: klvgmsxbxegcdgtz
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            trust: smtp.gmail.com
+
+mail.url.front: http://google.com/
+
 #security
 jwt:
   secret: s3cr3t

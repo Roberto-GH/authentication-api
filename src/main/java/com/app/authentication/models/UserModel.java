@@ -41,6 +41,7 @@ public class UserModel {
   @NotBlank(message = "Field can't be empty")
   @Length(min=6, message="Password don't have a valid format")
   private String password;
+  private String tokenPassword;
   private LocalDateTime createdAt;
   private LocalDateTime lastLogin;
   @ManyToMany(fetch = FetchType.EAGER)
