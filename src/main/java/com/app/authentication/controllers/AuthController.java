@@ -55,12 +55,12 @@ public class AuthController {
   public ResponseEntity<?> signUp(@Valid @RequestBody UserSignUpRequestDto userSignUpRequestDto, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       Map<String, String> jsonResponseError = new HashMap<>();
-      jsonResponseError.put("error", "Campos mal puestos o email invalido");
+      jsonResponseError.put("message", "Campos mal puestos o email invalido");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonResponseError);
     }
     if (userService.existsByEmail(userSignUpRequestDto.getEmail())) {
       Map<String, String> jsonResponse = new HashMap<>();
-      jsonResponse.put("error", "Ya existe un usuario con el email " + userSignUpRequestDto.getEmail());
+      jsonResponse.put("message", "Ya existe un usuario con el email " + userSignUpRequestDto.getEmail());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonResponse);
     }
     UserResponseDto userCreated = userService.createUser(userSignUpRequestDto);
@@ -73,7 +73,7 @@ public class AuthController {
   public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
       Map<String, String> jsonResponseError = new HashMap<>();
-      jsonResponseError.put("error", "Campos mal puestos o email invalido");
+      jsonResponseError.put("message", "Campos mal puestos o email invalido");
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonResponseError);
     }
     Authentication authentication =

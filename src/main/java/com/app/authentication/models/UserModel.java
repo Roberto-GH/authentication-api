@@ -1,9 +1,6 @@
 package com.app.authentication.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Length;
 
@@ -11,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -19,6 +15,7 @@ import java.util.Set;
 @Setter
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 public class UserModel {
@@ -43,11 +40,12 @@ public class UserModel {
   private String password;
   private String tokenPassword;
   private LocalDateTime createdAt;
+  private LocalDateTime updateAt;
   private LocalDateTime lastLogin;
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_rol", joinColumns = @JoinColumn(name = "user_id"),
   inverseJoinColumns = @JoinColumn(name = "rol_id"))
-  private Set<RolModel> roles = new HashSet<>();
+  private Set<RolModel> roles;
 
 
   @Override

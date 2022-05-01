@@ -76,6 +76,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public void updateUser(UserModel userModel) {
+    userRepository.save(userModel);
+  }
+
+  @Override
   public UserResponseDto createUser(UserSignUpRequestDto userSignUpRequestDto) {
     UserModel userModelToCreate = modelMapper.map(userSignUpRequestDto, UserModel.class);
     userModelToCreate.setCreatedAt(LocalDateTime.now().minusHours(5));// TODO: 18/10/2021 cambiar sistema de horarios

@@ -17,6 +17,7 @@ public interface UserService {
   Optional<UserModel> getByEmail(String email);
   Optional<UserModel> getUserByTokenPassword(String tokenPassword);
   void updateUserPassword(UserModel userModel);
+  void updateUser(UserModel userModel);
   UserResponseDto createUser(@Valid UserSignUpRequestDto userSignUpRequestDto);
   void deleteUser(int id);
   boolean existsById(int id);
