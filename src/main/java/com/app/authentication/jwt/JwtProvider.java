@@ -1,6 +1,10 @@
 package com.app.authentication.jwt;
 
+import com.app.authentication.dtos.response.JwtResponseDto;
 import com.app.authentication.security.UserDetailsImpl;
+import com.nimbusds.jwt.JWT;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTParser;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,7 +41,7 @@ public class JwtProvider {
             .setSubject(userDetailsImpl.getUsername())
             .claim("roles", roles)
             .setIssuedAt(new Date())
-            .setExpiration(new Date(new Date().getTime() + expiration * 1000))
+            .setExpiration(new Date(new Date().getTime() + expiration * 10))
             .signWith(SignatureAlgorithm.HS512, secret.getBytes())
             .compact();
   }
@@ -72,5 +77,19 @@ public class JwtProvider {
     return false;
   }
 
+  public String refreshToken(JwtResponseDto jwtResponseDto) throws ParseException {
+    try {
+      Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(jwtResponseDto.getToken());
+    } catch (ExpiredJwtException e) {
+      JWT jwt = JWTParser.parse(jwtResponseDto.getToken());
+      JWTClaimsSet claims = jwt.getJWTClaimsSet();
+      String userNameJwt = claims.getSubject();
+      List<String> roles = (List<String>) claims.getClaim("roles");
+
+      return Jwts.builder().setSubject(userNameJwt).claim("roles", roles).setIssuedAt(new Date()).setExpiration(new Date(new Date().getTime() + expiration * 10))
+                 .signWith(SignatureAlgorithm.HS512, secret.getBytes()).compact();
+    }
+    return null;
+  }
 
 }

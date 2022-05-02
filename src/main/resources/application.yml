@@ -37,4 +37,4 @@ mail.url.front: ${FRONT_END_URL}
 #security
 jwt:
   secret: ${JWT_SECRET}
-  expiration: 36000
+  expiration: 1000

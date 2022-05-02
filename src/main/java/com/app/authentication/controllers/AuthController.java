@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ public class AuthController {
   public static final String SIGNUP = "/signup";
   public static final String AUTH = "/auth";
   public static final String LOGIN = "/login";
+  public static final String REFRESH = "/refresh";
 
   @Autowired
   UserService userService;
@@ -89,5 +91,11 @@ public class AuthController {
     return ResponseEntity.status(HttpStatus.OK).body(jwtResponseDto);
   }
 
+  @PostMapping(REFRESH)
+  public ResponseEntity<?> refresh(@RequestBody JwtResponseDto jwtResponseDto) throws ParseException {
+    String token = jwtProvider.refreshToken(jwtResponseDto);
+    JwtResponseDto jwtRefresh = new JwtResponseDto(token);
+    return ResponseEntity.status(HttpStatus.OK).body(jwtRefresh);
+  }
 
 }
