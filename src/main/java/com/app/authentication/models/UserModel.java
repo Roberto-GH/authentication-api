@@ -1,13 +1,17 @@
 package com.app.authentication.models;
 
+import com.app.authentication.jwt.JwtProvider;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Length;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,6 +50,25 @@ public class UserModel {
   @JoinTable(name = "user_rol", joinColumns = @JoinColumn(name = "user_id"),
   inverseJoinColumns = @JoinColumn(name = "rol_id"))
   private Set<RolModel> roles;
+  @OneToMany(targetEntity = RefreshTokenModel.class, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, mappedBy = "id")
+  private List<RefreshTokenModel> refreshTokens;
+
+
+  public void addRefreshToken(RefreshTokenModel refreshToken){
+    refreshTokens.add(refreshToken);
+    refreshToken.setUser(this);
+  }
+
+  private final static Logger _log = LoggerFactory.getLogger(JwtProvider.class);
+
+  public void removeRefreshToken(RefreshTokenModel refreshToken){
+
+//    _log.info("size"+this.refreshTokens.size());
+//
+//    boolean isDeleted = refreshTokens.remove(refreshToken);
+//    _log.error("is deleted: "+ isDeleted);
+    refreshToken.setUser(null);
+  }
 
 
   @Override

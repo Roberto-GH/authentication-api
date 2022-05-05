@@ -10,6 +10,7 @@ import lombok.Setter;
 public class JwtResponseDto {
 
   private String token;
+  private String refreshToken;
   //private String bearer = "Bearer";
   //private String email;
   //private Collection<? extends GrantedAuthority> authorities;

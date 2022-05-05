@@ -5,7 +5,7 @@ import com.app.authentication.dtos.response.AllUsersResponseDto;
 import com.app.authentication.dtos.response.UserResponseDto;
 import com.app.authentication.models.UserModel;
 import com.app.authentication.services.UserService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class UserController {
   UserService userService;
 
   //@ApiIgnore  //Not endpoint into swagger
-  @ApiOperation("List all users")
+  @ApiOperation(response = UserResponseDto.class, value = "List all users")
   @GetMapping(USERS)
   public ResponseEntity<?> findAllUsers() {
     List<AllUsersResponseDto> users = userService.findAllUsers();
@@ -54,6 +54,7 @@ public class UserController {
     UserResponseDto user = userService.getUserById(id);
     return ResponseEntity.status(HttpStatus.OK).body(user);
   }
+
 
   @ApiOperation("Update user by id")
   @PreAuthorize("hasRole('ADMIN')")
