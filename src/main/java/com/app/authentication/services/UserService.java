@@ -1,7 +1,8 @@
 package com.app.authentication.services;
 
-import com.app.authentication.dtos.response.AllUsersResponseDto;
 import com.app.authentication.dtos.request.UserSignUpRequestDto;
+import com.app.authentication.dtos.request.UserUpdateRequestDto;
+import com.app.authentication.dtos.response.AllUsersResponseDto;
 import com.app.authentication.dtos.response.UserResponseDto;
 import com.app.authentication.models.UserModel;
 
@@ -17,7 +18,8 @@ public interface UserService {
   Optional<UserModel> getByEmail(String email);
   Optional<UserModel> getUserByTokenPassword(String tokenPassword);
   void updateUserPassword(UserModel userModel);
-  void updateUser(UserModel userModel);
+  void updateUser(UserModel user);
+  void updateUser(UserModel user, UserUpdateRequestDto userUpdateRequestDto);
   UserResponseDto createUser(@Valid UserSignUpRequestDto userSignUpRequestDto);
   void deleteUser(int id);
   boolean existsById(int id);

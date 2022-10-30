@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -21,9 +21,15 @@ public class RolModel {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(nullable = false)
   private int id;
-  @NotBlank(message = "Field can't be empty")
+  @NotNull
   @Enumerated(EnumType.STRING)
   private RolName rolName;
+
+
+  public RolModel(RolName rolName) {
+    this.rolName = rolName;
+  }
+
 
   @Override
   public String toString() {

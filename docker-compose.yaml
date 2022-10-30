@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  api:
+    image: auth-image
+    build:
+      context: .
+    container_name: auth-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+    environment:      
+      MYSQL_URL: '${MYSQL_URL}'
+      MYSQL_USERNAME: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      GMAIL_USERNAME: '${GMAIL_USERNAME}'      
+      GMAIL_HOST: '${GMAIL_HOST}'      
+      GMAIL_PASSWORD_KEY: '${GMAIL_PASSWORD_KEY}'
+      GMAIL_TRUST: '${GMAIL_TRUST}'
+      FRONT_END_URL: '${FRONT_END_URL}'
+      JWT_SECRET: '${JWT_SECRET}'
+      JWT_REFRESH_SECRET: '${JWT_REFRESH_SECRET}'
+  db:
+    image: mysql:8.0.26
+    cap_add:
+      - SYS_NICE
+    restart: always
+    container_name: auth-db
+    env_file:
+      - ./.env
+    volumes:
+      - ./mysql-data/db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: 'authentication_app'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${MYSQL_PASSWORD}'
+#volumes:
+ # mysql-data/db:

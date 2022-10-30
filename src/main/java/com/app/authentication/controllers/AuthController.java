@@ -34,7 +34,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(AuthController.AUTH)
-@CrossOrigin(origins = "*")// TODO: 17/10/2021  Referenciar front
+@CrossOrigin(origins = "${cross.origins}")
 public class AuthController {
 
 

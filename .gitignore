@@ -1,10 +1,10 @@
-<<<<<<< HEAD
 HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+mysql-data/
 
 ### STS ###
 .apt_generated
@@ -36,7 +36,7 @@ out/
 
 ### VS Code ###
 .vscode/
-=======
+
 # Compiled class file
 *.class
 
@@ -57,7 +57,7 @@ out/
 *.zip
 *.tar.gz
 *.rar
+.env
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
->>>>>>> 42ba95aa2d91059a85bfad21dd52ce72e3c9937d

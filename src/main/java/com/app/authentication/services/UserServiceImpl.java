@@ -1,6 +1,7 @@
 package com.app.authentication.services;
 
 import com.app.authentication.dtos.request.UserSignUpRequestDto;
+import com.app.authentication.dtos.request.UserUpdateRequestDto;
 import com.app.authentication.dtos.response.AllUsersResponseDto;
 import com.app.authentication.dtos.response.UserResponseDto;
 import com.app.authentication.enums.RolName;
@@ -78,6 +79,17 @@ public class UserServiceImpl implements UserService {
   @Override
   public void updateUser(UserModel userModel) {
     userRepository.save(userModel);
+  }
+
+  @Override
+  public void updateUser(UserModel user, UserUpdateRequestDto userUpdateRequestDto) {
+    user.setBiography(Optional.ofNullable(userUpdateRequestDto.getBiography()).orElse(user.getBiography()));
+    user.setUpdateAt(LocalDateTime.now().minusHours(5));
+    user.setName(Optional.ofNullable(userUpdateRequestDto.getName()).orElse(user.getName()));
+    user.setProfile_img(Optional.ofNullable(userUpdateRequestDto.getProfile_img()).orElse(user.getProfile_img()));
+    user.setLastName(Optional.ofNullable(userUpdateRequestDto.getLastName()).orElse(user.getLastName()));
+    user.setPhone(Optional.ofNullable(userUpdateRequestDto.getPhone()).orElse(user.getPhone()));
+    userRepository.save(user);
   }
 
   @Override

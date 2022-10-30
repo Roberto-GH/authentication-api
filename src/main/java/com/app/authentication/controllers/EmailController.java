@@ -22,7 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/email-password")
-@CrossOrigin
+@CrossOrigin(origins = "${cross.origins}")
 public class EmailController {
 
   @Autowired
