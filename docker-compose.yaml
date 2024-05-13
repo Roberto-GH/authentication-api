@@ -22,6 +22,8 @@ services:
       FRONT_END_URL: '${FRONT_END_URL}'
       JWT_SECRET: '${JWT_SECRET}'
       JWT_REFRESH_SECRET: '${JWT_REFRESH_SECRET}'
+    networks:
+      - auth_net
   db:
     image: mysql:8.0.26
     cap_add:
@@ -34,8 +36,12 @@ services:
       - ./mysql-data/db:/var/lib/mysql
     environment:
       MYSQL_DATABASE: 'authentication_app'
-      MYSQL_USER: 'user'
+      MYSQL_USER: '${MYSQL_USER}'
       MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
       MYSQL_ROOT_PASSWORD: '${MYSQL_PASSWORD}'
+    networks:
+      - auth_net
+networks:
+  auth_net:
 #volumes:
  # mysql-data/db:
